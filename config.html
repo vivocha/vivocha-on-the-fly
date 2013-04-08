@@ -1,0 +1,91 @@
+<html>
+  <head>
+  <title>Vivocha On The Fly</title>
+  <script src="config.js"></script>
+  <style type="text/css">
+
+    body {
+      width: 450px;
+    }
+
+    .container {
+      background-color: #FFB62B;
+      margin: 15px;
+      border-radius: 15px;
+      Padding: 15px;
+    }
+
+    input, button, span {
+      border-radius: 5px;
+      border-style: solid;
+      border-color: #54A7D3;
+      background-color: #54A7D3;
+      color: white;
+      font-weight:bold;
+      font-family: "Arial";
+      font-size: small;
+    }
+
+    input {
+      width: 350px;
+    }
+
+    #account {
+      width: 288px;
+      margin: 8px;
+    }
+
+    #patterns {
+       margin: 5px;
+    }
+
+    :focus {
+       outline:none;
+    }
+
+    .urlmatch {
+    }
+
+    .removebutton {
+       width: 25px;
+       margin-left: 4px;
+    }
+
+    #link-home {
+       background: url('logo-sprite.png');
+       background-position: 0% 0%;
+       height: 60px;
+       width: 200px;
+       margin-bottom: 40px;
+       margin-left: 200px;
+       margin-top: 25px;
+    }
+
+   
+  </style>
+
+</head>
+<body>
+    
+  <div class="container">
+
+    <div id="link-home" > </div>
+  
+    <span>Account</span><br/><input id="account" type="text" value=""/>
+
+    <br/>
+    <br/>
+
+    <span>URLs</span>
+
+    <div id="patterns">      
+    </div> 
+
+    <button id="addbutton">+</button>    
+    <button id="savebutton">Save</button>
+    <button id="undobutton">Undo</button>
+
+  </div>
+
+</body>
+</html>

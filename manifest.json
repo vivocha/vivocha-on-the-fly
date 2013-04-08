@@ -1,0 +1,19 @@
+{
+  "name": "Vivocha On The Fly",
+  "version": "1.2",
+  "background": { "scripts": ["background.js"] },
+  "permissions": [
+    "tabs", "*://*/*"
+  ],
+  "browser_action": {
+    "name": "Vivocha On The Fly",
+    "default_icon": "favicon.ico",
+    "default_popup": "config.html"
+  },
+  "icons": {
+    "16":  "favicon.ico",
+    "48":  "V Like Vivocha48.png",
+    "128": "V Like Vivocha128.png"
+  },
+  "manifest_version": 2
+}
