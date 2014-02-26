@@ -14,21 +14,20 @@ chrome.tabs.onCreated.addListener(updateHandler);
 
 function findMatchingAccount(url) {
   var mp = getMapping();
-  //console.log('findMatchingAccount', mp);
   for(var acct in mp) {
     var rgx = mp[acct];
-    //console.log('rgx', rgx);
     for (var i in rgx.patterns) {
       if (url.match(rgx.patterns[i]))
-        return acct;
+        return {'account' : acct, 'world' : rgx.world};
     }
   }
-  return null;
+  return {'account' : null, 'world' : null};
 }
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message == "waiting-account") {
-    sendResponse({account: findMatchingAccount(sender.tab.url), world: 'viganov.vivocha.com' });
+    var acct = findMatchingAccount(sender.tab.url);
+    sendResponse({account: acct.account, world: acct.world });
   } else if (request.message == "vivocha-enabled") {
     chrome.browserAction.setBadgeBackgroundColor({color:[0, 200, 0, 100]});
     chrome.browserAction.setBadgeText({text:'On'});
