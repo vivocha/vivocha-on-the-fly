@@ -1,4 +1,3 @@
-
 function addPattern(value) {
 
   var patterns = document.getElementById("patterns");
@@ -68,6 +67,7 @@ function tellTabToInsertScript() {
 function saveOptions() {
   var pattern = next(document.getElementById("patterns").firstChild, 'DIV');
   var account = document.getElementById("account").value;
+  var world = document.getElementById("world").value;
 
   var patterns = [];
 
@@ -80,17 +80,20 @@ function saveOptions() {
     pattern = next(pattern.nextSibling, "DIV");
     
   }
-
+  var data = {'world' : world, 'patterns': patterns};
   mapping = {};
-  mapping[account] = patterns;
-
+  //mapping[account] = patterns;
+  mapping[account] = data;
+  //chrome.extension.getBackgroundPage().console.log(data);
  }
 
 function persisteOptionsHandler() {
 
   saveOptions();
 
+  
   localStorage['VivochaOnTheFly'] = JSON.stringify(mapping);
+
 
   tellTabToInsertScript();
 
@@ -103,7 +106,10 @@ function loadOptions() {
   clear();
   for (var i in mapping) {
     document.getElementById("account").value = i;
-    var patterns = mapping[i];
+    var data = mapping[i];
+    document.getElementById("world").value = data.world || 'www.vivocha.com';
+    var patterns = data.patterns;
+    //var patterns = mapping[i];
     for (var j in patterns) {
       addPattern(patterns[j]);
     }

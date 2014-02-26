@@ -1,6 +1,6 @@
 
 function getMapping() {
-  return JSON.parse(localStorage['VivochaOnTheFly'] || {});
+  return JSON.parse(localStorage['VivochaOnTheFly'] || '{}');
 }
 
 function updateHandler(tab) {
@@ -14,9 +14,11 @@ chrome.tabs.onCreated.addListener(updateHandler);
 
 function findMatchingAccount(url) {
   var mp = getMapping();
+  //console.log('findMatchingAccount', mp);
   for(var acct in mp) {
     var rgx = mp[acct];
-    for (var i in rgx) {
+    //console.log('rgx', rgx);
+    for (var i in rgx.patterns) {
       if (url.match(rgx[i]))
         return acct;
     }
@@ -26,7 +28,7 @@ function findMatchingAccount(url) {
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message == "waiting-account") {
-    sendResponse({account: findMatchingAccount(sender.tab.url) });
+    sendResponse({account: findMatchingAccount(sender.tab.url), world: 'viganov.vivocha.com' });
   } else if (request.message == "vivocha-enabled") {
     chrome.browserAction.setBadgeBackgroundColor({color:[0, 200, 0, 100]});
     chrome.browserAction.setBadgeText({text:'On'});
