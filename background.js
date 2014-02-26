@@ -19,7 +19,7 @@ function findMatchingAccount(url) {
     var rgx = mp[acct];
     //console.log('rgx', rgx);
     for (var i in rgx.patterns) {
-      if (url.match(rgx[i]))
+      if (url.match(rgx.patterns[i]))
         return acct;
     }
   }
