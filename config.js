@@ -13,7 +13,7 @@ function addPattern(value) {
 
   input.value = value;
 
-  patterns.appendChild(div);
+  patterns.insertBefore(div, patterns.firstChild);
 
   button.addEventListener('click', removePatternHandler, button);
   
@@ -126,5 +126,19 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('addbutton').addEventListener('click', addPatternHandler);
   document.getElementById('savebutton').addEventListener('click', persisteOptionsHandler);
   document.getElementById('undobutton').addEventListener('click', undo);
+    document.getElementById('advanced').addEventListener("click", advanced, false);
   undo();
 });
+
+
+function advanced(){
+     var el = document.getElementById('world_container');
+    var ad =  document.getElementById('advanced');
+     if(ad) {
+    ad.className =  ad.className ? ' ' : ' selected';
+     }
+    if(el) {
+        el.className = el.className ? ' ' : 'hidden';
+      }
+}
+
