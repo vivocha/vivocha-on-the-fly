@@ -17,12 +17,21 @@ function removePreviousScript () {
   return parentNode;
 }
 
+function removeDataFrame() {
+  var frame = document.getElementById('vivocha_data')
+  if(frame) {
+    var parentNode = frame.parentNode;
+    parentNode.removeChild(frame);
+  }
+}
+
 function insertScript(account, world) {
 
   var script = document.getElementById(uuid);
 
   if (!script) {
     delete window.vivocha;
+    removeDataFrame();
     var parentNode = removePreviousScript() || document.body;
     script = document.createElement('script');
     script.setAttribute('type', 'text/javascript'); 

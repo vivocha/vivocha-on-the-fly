@@ -1,6 +1,6 @@
 {
   "name": "Vivocha On The Fly",
-  "version": "1.6",
+  "version": "1.6.1",
   "background": { "scripts": ["background.js"] },
   "permissions": [
     "tabs", "*://*/*"
