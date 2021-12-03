@@ -1,12 +1,15 @@
 import { Mapping, MatchingAccount } from './types';
 
-function getMapping(): Mapping {
-  return JSON.parse(localStorage.getItem('VivochaOnTheFly') || '{}') as Mapping;
+async function getMapping(): Promise<Mapping> {
+  return chrome.storage.local.get();
 }
 
-function updateHandler(tabId: number) {
-  chrome.browserAction.setBadgeText({ text: '' });
-  chrome.tabs.executeScript(tabId, { file: "vivocha-extension.js" });
+async function updateHandler(tabId: number) {
+  chrome.action.setBadgeText({ text: '' });
+  chrome.scripting.executeScript({
+    target: {tabId},
+    files: ["vivocha-extension.js"],
+  });
 }
 
 chrome.tabs.onUpdated.addListener((tabId: number, changeInfo: any) => {
@@ -21,9 +24,8 @@ chrome.tabs.onCreated.addListener((tab) => {
   updateHandler(tab.id);
 });
 */
-
-function findMatchingAccount(url: string): MatchingAccount {
-  const mp = getMapping();
+async function findMatchingAccount(url: string): Promise<MatchingAccount> {
+  const mp = await getMapping();
   for (let acct in mp) {
     const rgx = mp[acct];
     for (let i in rgx.patterns) {
@@ -37,18 +39,18 @@ function findMatchingAccount(url: string): MatchingAccount {
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.message == "waiting-account") {
-    setTimeout(() => {
-      const acct = findMatchingAccount(sender.tab.url);
+    setTimeout(async () => {
+      const acct = await findMatchingAccount(sender.tab.url);
       sendResponse({ account: acct.account, world: acct.world });
     }, 1);
   } else if (request.message == "vivocha-enabled") {
-    chrome.browserAction.setIcon({ path: '/img/on_16.png' })
-    //chrome.browserAction.setBadgeBackgroundColor({color:[0, 200, 0, 100]});
-    //chrome.browserAction.setBadgeText({text:'On'});
+    chrome.action.setIcon({ path: '/img/on_16.png' })
+    //chrome.action.setBadgeBackgroundColor({color:[0, 200, 0, 100]});
+    //chrome.action.setBadgeText({text:'On'});
   } else if (request.message == "vivocha-disabled") {
-    chrome.browserAction.setIcon({ path: '/img/off_16.png' })
-    //chrome.browserAction.setBadgeBackgroundColor({color:[0, 100, 0, 0]});
-    //chrome.browserAction.setBadgeText({text:'Off'});
+    chrome.action.setIcon({ path: '/img/off_16.png' })
+    //chrome.action.setBadgeBackgroundColor({color:[0, 100, 0, 0]});
+    //chrome.action.setBadgeText({text:'Off'});
   } else if (request.message == "vivocha-insert") {
     updateHandler(sender.tab?.id);
   }

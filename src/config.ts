@@ -87,9 +87,9 @@ function saveOptions() {
   //chrome.extension.getBackgroundPage().console.log(data);
 }
 
-function persisteOptionsHandler() {
+async function persisteOptionsHandler() {
   saveOptions();
-  localStorage.setItem('VivochaOnTheFly', JSON.stringify(mapping));
+  await chrome.storage.local.set(mapping);
   tellTabToInsertScript();
   window.close();
 }
