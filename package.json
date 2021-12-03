@@ -1,0 +1,36 @@
+{
+  "name": "vivocha-on-the-fly",
+  "description": "Vivocha On The Fly",
+  "shortdescription": "Vivocha On The Fly",
+  "version": "1.7.0",
+  "scripts": {
+    "clean": "[ ! -d ./ext ] || rm -rf ext/*",
+    "clean:all": "npm run clean && rm -rf node_modules",
+    "prebuild": "npm run clean && mkdir -p ext",
+    "build": "webpack",
+    "postbuild": "cp -a src/*.ico ext/ && cp -a src/img ext/",
+    "precommit": "npm run build",
+    "version": "jsonref -f ./package.json /version",
+    "prepack": "mkdir -p package",
+    "pack": "zip -j -r -X package/$npm_package_name.$npm_package_version.zip ext",
+    "build:watch": "npm run prebuild && npm run postbuild && webpack -w",
+    "build:all": "npm run clean:all && npm i && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vivocha/vivocha-on-the-fly.git"
+  },
+  "author": "Vivocha Dev Team <dev@vivocha.com> (http://www.vivocha.com/)",
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://github.com/vivocha/vivocha-on-the-fly.git#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.166",
+    "html-webpack-plugin": "^5.5.0",
+    "jsonref-cli": "^1.0.0",
+    "source-map-loader": "^3.0.0",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.2",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  }
+}

@@ -1,7 +1,10 @@
 {
-  "name": "Vivocha On The Fly",
-  "version": "1.6.1",
-  "background": { "scripts": ["background.js"] },
+  "manifest_version": 2,
+  "icons": {
+    "16":  "small.ico",
+    "48":  "img/medium.png",
+    "128": "img/big.png"
+  },
   "permissions": [
     "tabs", "*://*/*"
   ],
@@ -10,10 +13,5 @@
     "default_icon": "small.ico",
     "default_popup": "config.html"
   },
-  "icons": {
-    "16":  "small.ico",
-    "48":  "img/medium.png",
-    "128": "img/big.png"
-  },
-  "manifest_version": 2
+  "background": { "scripts": ["background.js"] }
 }
